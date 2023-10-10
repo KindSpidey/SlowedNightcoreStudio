@@ -2,18 +2,6 @@ import React, { useState, useEffect } from 'react';
 import CustomAudioPlayer from './CustomAudioPlayer';
 import './styles.css';
 
-
-// const TelegramApi = require('node-telegram-bot-api');
-// const token = '6497923379:AAHb8_bjIE3vfM0lcwM45qtOVY3SAyq6Ku0';
-// const bot = new TelegramApi(token,{polling:true});
-// bot.on('message', msg=>{
-//     const text = msg.text;
-//     const chatId = msg.chat.id;
-//
-//     if (text === '/start'){
-//         bot.sendMessage(chatId, 'Hello! This is slowed reverb bot!')
-//     }
-// })
 function App() {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -59,11 +47,36 @@ function App() {
     }, [file]);
 
     useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-        // The app is running inside Telegram as a Mini App
-        window.Telegram.WebApp.ready();
-    }
-}, []);
+        if (window.Telegram && window.Telegram.WebApp) {
+            // The app is running inside Telegram as a Mini App
+            window.Telegram.WebApp.ready();
+        }
+    }, []);
+
+    // Extract the chat ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const chatId = urlParams.get('chat_id');
+
+    const handleDownload = (audioBlob) => {
+        // Convert the audio blob to a FormData for sending via HTTP POST
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'editedAudio.wav');
+        formData.append('chatId', chatId);
+
+        // Send the audio blob to your server
+        fetch('https://b8c4-51-15-17-109.ngrok.io/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Audio sent successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error sending audio:', error);
+        });
+    };
+
     return (
         <div className="container">
             <div className={`upload-title ${file ? 'hidden' : ''}`}>Upload your song</div>
@@ -73,7 +86,7 @@ function App() {
                 {file && (
                     <>
                         <div className={`controls ${showControls ? 'show' : ''}`}>
-                            <CustomAudioPlayer src={file} speed={speed} gain={gain} bassBoost={bassBoost} />
+                            <CustomAudioPlayer src={file} speed={speed} gain={gain} bassBoost={bassBoost} onDownload={handleDownload}/>
                             <div className={`song-title ${showControls ? 'hidden' : ''}`}>{fileName}</div>
                             <label className="slider-label">Speed</label>
                             <input className="slider" type="range" min="0.5" max="1.5" step="0.01" value={speed} onChange={handleSpeedChange} />
@@ -84,16 +97,11 @@ function App() {
                             <label className="slider-label">Bass Boost</label>
                             <input className="slider" type="range" min="-10" max="10" step="0.1" value={bassBoost} onChange={handleBassBoostChange} />
                             <div className="slider-value">{bassBoost}</div>
-
-                            <div className="download-section">
-                                <div className="download-title">Download as</div>
-                                <div className="button-group">
-                                    <button className="format-button">MP3</button>
-                                    <button className="format-button">WAV</button>
-                                    <button className="format-button">FLAC</button>
-                                </div>
+                            <div className="convert-wrapper">
+                                <button className="convert-another" onClick={handleDownload}>
+                                    Download changed song
+                                </button>
                             </div>
-
                             <div className="convert-wrapper">
                                 <label className="convert-another" htmlFor="convertInput">
                                     Convert Another Song
