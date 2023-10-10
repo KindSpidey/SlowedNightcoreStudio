@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/SlowedNightcoreStudio/static/css/main.78873d9b.css",
+    "main.js": "/SlowedNightcoreStudio/static/js/main.919800e6.js",
+    "static/js/787.7dbd8e22.chunk.js": "/SlowedNightcoreStudio/static/js/787.7dbd8e22.chunk.js",
+    "index.html": "/SlowedNightcoreStudio/index.html",
+    "main.78873d9b.css.map": "/SlowedNightcoreStudio/static/css/main.78873d9b.css.map",
+    "main.919800e6.js.map": "/SlowedNightcoreStudio/static/js/main.919800e6.js.map",
+    "787.7dbd8e22.chunk.js.map": "/SlowedNightcoreStudio/static/js/787.7dbd8e22.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.78873d9b.css",
+    "static/js/main.919800e6.js"
+  ]
+}
