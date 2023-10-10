@@ -113,6 +113,11 @@ function App() {
                         <input className="slider" type="range" min="-10" max="10" step="0.1" value={bassBoost} onChange={handleBassBoostChange} />
                         <div className="slider-value">{bassBoost}</div>
                         <div className="convert-wrapper">
+                            <button className="convert-another" onClick={sendAudioToTelegram}>
+                                Download song
+                            </button>
+                        </div>
+                        <div className="convert-wrapper">
                             <label className="convert-another" htmlFor="convertInput">
                                 Convert Another Song
                                 <input type="file" accept="audio/*" onChange={(e) => onDrop(e, true)} style={{ display: 'none' }} id="convertInput" />
