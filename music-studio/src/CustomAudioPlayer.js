@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function CustomAudioPlayer({ src, speed, gain, bassBoost = 0, onDownload }) {
+function CustomAudioPlayer({ src, speed, gain, bassBoost = 0 }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -118,60 +118,6 @@ function CustomAudioPlayer({ src, speed, gain, bassBoost = 0, onDownload }) {
         return `${mins}:${secs}`;
     };
 
-    const captureAudio = async () => {
-        const offlineCtx = new OfflineAudioContext(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
-        const bufferSource = offlineCtx.createBufferSource();
-        bufferSource.buffer = audioBuffer;
-        bufferSource.connect(offlineCtx.destination);
-        bufferSource.start();
-        const renderedBuffer = await offlineCtx.startRendering();
-        const wavBlob = bufferToWave(renderedBuffer, renderedBuffer.length);
-        onDownload(wavBlob);
-    };
-
-    const bufferToWave = (audioBuffer, length) => {
-        const numOfChan = audioBuffer.numberOfChannels;
-        const lengthOfBuffer = length * numOfChan * 2 + 44;
-        const buffer = new ArrayBuffer(lengthOfBuffer);
-        const view = new DataView(buffer);
-        const channels = [];
-        let offset = 0;
-        let pos = 0;
-        setUint32(0x46464952);
-        setUint32(lengthOfBuffer - 8);
-        setUint32(0x45564157);
-        setUint32(0x20746d66);
-        setUint32(16);
-        setUint16(1);
-        setUint16(numOfChan);
-        setUint32(audioBuffer.sampleRate);
-        setUint32(audioBuffer.sampleRate * 2 * numOfChan);
-        setUint16(numOfChan * 2);
-        setUint16(16);
-        setUint32(0x61746164);
-        setUint32(length * numOfChan * 2);
-        for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
-            channels.push(audioBuffer.getChannelData(i));
-        }
-        while (pos < length) {
-            for (let i = 0; i < numOfChan; i++) {
-                const sample = Math.max(-1, Math.min(1, channels[i][pos]));
-                view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
-                offset += 2;
-            }
-            pos++;
-        }
-        function setUint16(data) {
-            view.setUint16(offset, data, true);
-            offset += 2;
-        }
-        function setUint32(data) {
-            view.setUint32(offset, data, true);
-            offset += 4;
-        }
-        return new Blob([view], { type: 'audio/wav' });
-    };
-
     return (
         <div className="custom-audio-player">
             <button className="play-pause-button" onClick={togglePlay}>
@@ -191,7 +137,6 @@ function CustomAudioPlayer({ src, speed, gain, bassBoost = 0, onDownload }) {
                 <div className="time-display current-time">{formatTime(pausedAt)}</div>
                 <div className="time-display total-time">{formatTime(duration)}</div>
             </div>
-            <button onClick={captureAudio}>Download changed song</button>
         </div>
     );
 }
