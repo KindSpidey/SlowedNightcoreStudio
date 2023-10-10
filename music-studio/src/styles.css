@@ -1,0 +1,391 @@
+/* styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(to top, #7B0B4B, #E1113F);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropzone {
+    width: 320px;
+    height: 169px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 24px;
+    transition: height 0.5s ease-in-out;
+}
+
+.dropzone.expanded {
+    height: 690px; /* the expanded height */
+    align-items: flex-start; /* align content to the top */
+    padding-top: 20px; /* give some padding to the top */
+}
+
+.controls {
+    margin-top: 0; /* remove the top margin */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; /* center the content horizontally */
+}
+
+
+.upload-title {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.file-types {
+    color: #F5F5F5;
+    font-size: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.controls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 220px;
+  height: 6px;
+  background: #57192e;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 30px;
+  background: #ef0649;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+.upload-title.hidden {
+    display: none;
+}
+
+.slider-label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #773E4F;
+}
+
+.slider-value {
+    color: #d80a48;
+}
+
+.controls {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.controls.show {
+    opacity: 1;
+}
+.dropzone.disabled {
+    cursor: default;
+}
+
+
+/* ... Existing styles ... */
+
+.container {
+    /* ... existing styles ... */
+    justify-content: start; /* This will start the content from the top of the container */
+}
+
+.dropzone.expanded {
+    height: 690px; /* the expanded height */
+    padding-top: 20px; /* give some padding to the top */
+    justify-content: flex-start; /* Start items from the top */
+}
+
+.controls {
+    width: 100%; /* take full width of the parent container */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; /* Center the items horizontally */
+}
+
+.file-name {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #BE0F43;
+    margin-bottom: 20px; /* Add some space below the file name */
+}
+
+.custom-audio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the items horizontally */
+    width: 100%; /* take full width */
+}
+
+
+.song-title {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #BE0F43;
+    margin-bottom: 10px;
+    margin-top: 20px;/* Add some space below the file name */
+    text-align: center;
+}
+
+.custom-audio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.play-pause-button {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #773E4F;
+    margin-bottom: 20px;
+    width: 50px; /* Fix the width */
+    height: 50px;
+    text-align: center; /* Center the content */
+}
+
+
+
+.progress-bar {
+    width: 280px; /* Match the width of the sliders */
+    height: 6px;
+    background-color: #E5E5E5;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #773E4F;
+}
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    position: relative; /* Added for absolute positioning of time displays */
+}
+
+.time-display {
+    font-size: 10px;
+    color: #BD7474;
+    position: absolute; /* Use absolute positioning for time displays */
+    bottom: -10px; /* Adjust as needed to position below the progress bar */
+    width: 280px;
+}
+
+.current-time {
+    text-align: left;
+    left: 20px; /* Align to the left edge */
+}
+
+.total-time {
+    text-align: right;
+    right: 20px; /* Align to the right edge */
+}
+
+.progress-input {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.progress-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #BE0F43;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -17px; /* To align the dot in the center of the progress bar */
+}
+
+.progress-input::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background-color: #BE0F43;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.progress-input::-ms-thumb {
+    width: 10px;
+    height: 10px;
+    background-color: #BE0F43;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.download-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%; /* Set the width to 80% */
+    margin: 0 auto; /* Center the section */
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    border-radius: 14px;
+    background: linear-gradient(to top, #7B0B4B, #E1113F);
+}
+
+.download-title {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.format-button {
+    background-color: #FFFFFF;
+    color: #7B0B4B;
+    border: none;
+    padding: 15px 27px;
+    border-radius: 16px;
+    font-weight: 550;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.format-button:hover {
+    background-color: #F5F5F5;
+}
+
+
+.convert-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    width: 90%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.convert-another {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #B70F45;
+    font-weight: bold;
+    border: 3px solid;
+    border-radius: 13px;
+
+    cursor: pointer;
+    width: 100%;
+}
+.custom-audio-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.play-pause-button {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar {
+    position: relative;
+    width: 300px;
+    height: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+}
+
+.progress {
+    position: absolute;
+    height: 100%;
+    background: #800729;
+    border-radius: 5px;
+}
+
+.progress-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.time-display {
+    font-size: 14px;
+}
+.thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #d80a48;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);  /* Center the thumb */
+    z-index: 3;  /* Ensure thumb is on top */
+    pointer-events: none;  /* Ensure it doesn't interfere with range input */
+}
